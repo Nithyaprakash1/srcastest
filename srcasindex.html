@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heritage Club, Sri Ramakrishna College of Arts and Science, Coimbatore</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts - Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            color: #334155;
+            overflow-x: hidden;
+            cursor: none;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+        /* Big, half-underlined section heading */
+        .section-heading {
+            /* Using a dark green from the logo */
+            @apply text-5xl md:text-6xl font-extrabold text-green-900 mb-10 relative pb-4;
+        }
+        .section-heading::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 120px;
+            height: 5px;
+            /* Using the light, vibrant green from the logo */
+            background-color: #a3e635; /* lime-400 */
+            border-radius: 2px;
+        }
+        .section-heading.text-center::after {
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .section-paragraph {
+            @apply text-lg text-gray-700 leading-relaxed mb-4;
+        }
+        .card {
+            @apply bg-white rounded-xl shadow-lg p-6 transition-transform duration-300;
+        }
+        .card:hover, .animated-image:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+        }
+        .animated-image {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        /* Hero Section with new green gradient from the logo */
+        .hero-section {
+            position: relative;
+            background:
+                linear-gradient(135deg, rgba(20, 83, 45, 0.9), rgba(132, 204, 22, 0.75)), /* Dark Green to Light Green */
+                url('https://placehold.co/1920x1080/14532D/FFFFFF?text=Indian+Culture') /* Placeholder with new theme color */
+                center/cover no-repeat;
+            background-blend-mode: multiply;
+        }
+
+        /* Scroll reveal animation */
+        .reveal-section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        .reveal-section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Cursor Follower with new theme colors */
+        .cursor-follower {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background-color: rgba(163, 230, 53, 0.4); /* Light Green */
+            pointer-events: none;
+            transition: transform 0.1s ease-out, background-color 0.2s ease, width 0.2s ease, height 0.2s ease;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+        }
+        @media (pointer: coarse) {
+            .cursor-follower { display: none; }
+            body { cursor: auto; }
+        }
+        /* Hover color uses the orange from the logo text */
+        a:hover ~ .cursor-follower, button:hover ~ .cursor-follower, .card:hover ~ .cursor-follower {
+            background-color: rgba(234, 88, 12, 0.6); /* Orange-600 */
+            width: 40px;
+            height: 40px;
+        }
+
+        /* Glassmorphism Header on Scroll */
+        header.scrolled {
+            background-color: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        }
+        header {
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        /* Back to Top Button with new theme */
+        #back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #14532d; /* Dark Green */
+            color: white;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s, visibility 0.3s, transform 0.3s;
+            transform: translateY(20px);
+            z-index: 1000;
+        }
+        #back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        #back-to-top:hover {
+            background-color: #a3e635; /* Light Green */
+            color: #14532d; /* Dark Green text on hover */
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 767px) {
+            header .container {
+                flex-direction: column;
+                align-items: center;
+                gap: 1rem;
+            }
+            header nav ul {
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header / Navbar -->
+    <!-- Header / Navbar -->
+<header id="main-header" class="bg-white shadow-md py-4 sticky top-0 z-50">
+    <div class="container flex justify-between items-center">
+        <a href="#" class="flex items-center space-x-4 max-w-xs md:max-w-none">
+            <!-- Replaced SVG icon with the club logo image -->
+            <img src="HERITAGE_LOGO_SHIELD_FINAL_ (1)cmyk.png" alt="Heritage Club Logo" class="w-14 h-auto flex-shrink-0">
+            <span class="text-xl text-center md:text-left md:text-2xl font-bold text-gray-800 hover:text-green-800 transition-colors">Heritage Club, Sri Ramakrishna College of Arts and Science</span>
+        </a>
+        <nav>
+            <ul class="flex space-x-6">
+                <li><a href="#about-club" class="text-gray-600 hover:text-green-700 font-medium">About Club</a></li>
+                <li><a href="#vision" class="text-gray-600 hover:text-green-700 font-medium">Vision</a></li>
+                <li><a href="#mission" class="text-gray-600 hover:text-green-700 font-medium">Mission</a></li>
+                <li><a href="#core-activities" class="text-gray-600 hover:text-green-700 font-medium">Activities</a></li>
+                <li><a href="#leadership-governance" class="text-gray-600 hover:text-green-700 font-medium">Leadership</a></li>
+                <li><a href="#why-join" class="text-gray-600 hover:text-green-700 font-medium">Why Join?</a></li>
+                <li><a href="#join-us" class="text-gray-600 hover:text-green-700 font-medium">Contact</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+    <!-- Hero Section -->
+    <section class="hero-section text-white py-24 md:py-32 text-center reveal-section">
+        <div class="container">
+            <h1 class="text-4xl md:text-6xl font-extrabold leading-tight mb-6">
+                Preserving India's Rich Heritage <br class="hidden md:block"> for Future Generations
+            </h1>
+            <p class="text-xl md:text-2xl font-light mb-8 max-w-3xl mx-auto">
+                Explore, appreciate, and conserve the diverse cultural wealth of our nation.
+            </p>
+            <!-- Button updated with new theme -->
+            <a href="#about-club" class="inline-block bg-lime-400 text-green-900 px-8 py-4 rounded-full text-lg font-bold hover:bg-lime-500 transition-colors shadow-md">
+                Discover Our Journey
+            </a>
+        </div>
+    </section>
+
+    <!-- About the Club Section -->
+    <section id="about-club" class="py-16 bg-white reveal-section">
+        <div class="container grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div class="flex justify-center items-center">
+                <img src="https://placehold.co/600x400/ECFCCB/166534?text=Heritage+Exploration" alt="Heritage Club students exploring history" class="rounded-xl shadow-lg w-full h-auto object-cover animated-image">
+            </div>
+            <div>
+                <h2 class="section-heading">About the Club</h2>
+                <p class="section-paragraph">
+                    The Heritage Club of Sri Ramakrishna College of Arts and Science is a distinguished student forum committed to the <strong>preservation, promotion, and appreciation of India’s cultural wealth</strong>. Established with the vision of nurturing cultural consciousness, the club provides students with a unique platform to explore traditions, values, and indigenous knowledge systems while fostering a spirit of inclusivity and innovation.
+                </p>
+                <p class="section-paragraph">
+                    The Club actively integrates heritage awareness into academic and extracurricular life through curated events, heritage walks, expert interactions, and student-led initiatives that emphasize the importance of safeguarding our collective legacy.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Vision Section -->
+    <section id="vision" class="py-16 bg-gray-50 reveal-section">
+        <div class="container grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div class="md:order-2 flex justify-center items-center">
+                <img src="https://placehold.co/600x400/ECFCCB/166534?text=Club+Vision" alt="Inspiring students to value heritage" class="rounded-xl shadow-lg w-full h-auto object-cover animated-image">
+            </div>
+            <div class="md:order-1">
+                <h2 class="section-heading">Vision</h2>
+                <p class="section-paragraph">
+                    To be a center of excellence that inspires students to value, preserve, and propagate the <strong>diverse cultural and heritage traditions of India</strong>.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission Section -->
+    <section id="mission" class="py-16 bg-white reveal-section">
+        <div class="container grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div class="flex justify-center items-center">
+                <img src="https://placehold.co/600x400/ECFCCB/166534?text=Club+Mission" alt="Mission objectives for Heritage Club" class="rounded-xl shadow-lg w-full h-auto object-cover animated-image">
+            </div>
+            <div>
+                <h2 class="section-heading">Mission</h2>
+                <ul class="list-disc list-inside space-y-2 section-paragraph">
+                    <li>To cultivate a deep sense of <strong>cultural identity and pride</strong> among students.</li>
+                    <li>To organize impactful programmes that highlight <strong>tangible and intangible heritage</strong>.</li>
+                    <li>To provide a platform for <strong>creative expression</strong> rooted in cultural values.</li>
+                    <li>To engage students in <strong>heritage conservation</strong> through experiential learning.</li>
+                    <li>To foster leadership, unity, and responsibility in preserving traditions for future generations.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Core Activities Section -->
+    <section id="core-activities" class="py-16 bg-gray-50 reveal-section">
+        <div class="container">
+            <h2 class="section-heading text-center">Core Activities</h2>
+            <div class="max-w-4xl mx-auto">
+                <p class="section-paragraph text-center mb-8">
+                    The Heritage Club undertakes initiatives that combine knowledge, creativity, and community engagement:
+                </p>
+                <ul class="list-disc list-inside space-y-3 text-lg text-gray-700 leading-relaxed grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4">
+                    <li><strong>Orientation & Awareness Drives</strong> – instilling cultural consciousness among new members.</li>
+                    <li><strong>Workshops & Masterclasses</strong> – on traditional art forms, crafts, and literature.</li>
+                    <li><strong>Cultural Showcases</strong> – exhibitions, performances, and inter-collegiate competitions.</li>
+                    <li><strong>Heritage Walks & Field Visits</strong> – to historical sites, museums, and monuments.</li>
+                    <li><strong>Collaborative Projects</strong> – with cultural organizations, NGOs, and peer clubs.</li>
+                    <li><strong>Festivals & Observances</strong> – celebrating India’s diversity through thematic events.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Leadership & Governance Section -->
+    <section id="leadership-governance" class="py-16 bg-white reveal-section">
+        <div class="container">
+            <h2 class="section-heading text-center">Leadership & Governance</h2>
+            <p class="section-paragraph text-center max-w-2xl mx-auto mb-10">
+                The Heritage Club is guided and supported by dedicated faculty members and student leaders who strive to uphold the club’s vision and mission. Together, they create a vibrant and sustainable platform that celebrates culture while empowering students to take pride in their heritage.
+            </p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 max-w-4xl mx-auto">
+                <!-- Member Cards with new theme colors -->
+                <div class="card flex flex-col items-center text-center">
+                    <img src="https://placehold.co/100x100/A3E635/000000?text=Mr.+Naveen" alt="Mr. A. S. Naveen Prashath" class="rounded-full w-24 h-24 object-cover mb-4 ring-2 ring-lime-400">
+                    <h3 class="text-xl font-bold text-green-900">Mr. A. S. Naveen Prashath</h3>
+                    <p class="text-gray-600">Chairman</p>
+                </div>
+                <div class="card flex flex-col items-center text-center">
+                    <img src="https://placehold.co/100x100/A3E635/000000?text=Ms.+Parkavi" alt="Ms. B. Parkavi" class="rounded-full w-24 h-24 object-cover mb-4 ring-2 ring-lime-400">
+                    <h3 class="text-xl font-bold text-green-900">Ms. B. Parkavi</h3>
+                    <p class="text-gray-600">Faculty Coordinator</p>
+                </div>
+                <div class="card flex flex-col items-center text-center">
+                    <img src="https://placehold.co/100x100/A3E635/000000?text=Dr.+Aarthy" alt="Dr. J. Aarthy" class="rounded-full w-24 h-24 object-cover mb-4 ring-2 ring-lime-400">
+                    <h3 class="text-xl font-bold text-green-900">Dr. J. Aarthy</h3>
+                    <p class="text-gray-600">Faculty Coordinator</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Join the Heritage Club? Section -->
+    <section id="why-join" class="py-16 bg-gray-50 reveal-section">
+        <div class="container grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div class="md:order-2 flex justify-center items-center">
+                <img src="https://placehold.co/600x400/ECFCCB/166534?text=Benefits+of+Joining" alt="Students engaging in club activities" class="rounded-xl shadow-lg w-full h-auto object-cover animated-image">
+            </div>
+            <div class="md:order-1">
+                <h2 class="section-heading">Why Join the Heritage Club?</h2>
+                <ul class="list-disc list-inside space-y-2 section-paragraph">
+                    <li>Opportunities to engage with <strong>India’s cultural richness</strong> beyond textbooks.</li>
+                    <li><strong>Leadership roles</strong> in organizing high-impact cultural initiatives.</li>
+                    <li>A platform to showcase talent, creativity, and cultural knowledge.</li>
+                    <li><strong>Professional exposure</strong> through collaborations and community outreach.</li>
+                    <li>Personal growth by developing values of respect, unity, and responsibility.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Join Us / Contact Section -->
+    <section id="join-us" class="py-16 bg-white reveal-section">
+        <div class="container text-center">
+            <h2 class="section-heading text-center">Join Us</h2>
+            <p class="section-paragraph max-w-3xl mx-auto mb-8">
+                The Heritage Club welcomes students from all disciplines who are passionate about culture, tradition, and history. Together, we strive to uphold the legacy of our past and inspire future generations.
+            </p>
+            <div class="card p-8 inline-block max-w-lg mx-auto text-left">
+                <h3 class="text-2xl font-bold text-green-900 mb-4">Contact Information</h3>
+                <p class="text-lg text-gray-700">
+                    Heritage Club,<br>
+                    Sri Ramakrishna College of Arts and Science,<br>
+                    Coimbatore
+                </p>
+                <p class="text-md text-gray-600 mt-4">For inquiries, please visit the college administration office.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer updated to dark green theme -->
+    <footer class="bg-green-900 text-gray-200 py-10">
+        <div class="container text-center text-sm">
+            <p>&copy; 2025 Heritage Club, Sri Ramakrishna College of Arts and Science. All rights reserved.</p>
+            <p class="mt-2">Committed to the preservation, promotion, and appreciation of India’s cultural wealth.</p>
+        </div>
+    </footer>
+
+    <!-- Cursor Follower Element -->
+    <div class="cursor-follower"></div>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" title="Go to top">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor" class="w-6 h-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
+        </svg>
+    </button>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Scroll reveal animation
+            const revealSections = document.querySelectorAll('.reveal-section');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1 });
+            revealSections.forEach(section => observer.observe(section));
+
+            // Cursor Follower
+            if (window.matchMedia("(pointer: fine)").matches) {
+                const cursorFollower = document.querySelector('.cursor-follower');
+                let mouseX = 0, mouseY = 0, followerX = 0, followerY = 0;
+                document.addEventListener('mousemove', (e) => { mouseX = e.clientX; mouseY = e.clientY; });
+                function animateCursor() {
+                    followerX += (mouseX - followerX) * 0.1;
+                    followerY += (mouseY - followerY) * 0.1;
+                    cursorFollower.style.transform = `translate(${followerX}px, ${followerY}px) translate(-50%, -50%)`;
+                    requestAnimationFrame(animateCursor);
+                }
+                animateCursor();
+            }
+
+            // Smooth scrolling for anchors
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href'))?.scrollIntoView({ behavior: 'smooth' });
+                });
+            });
+
+            // Back to Top & Scrolled Header Logic
+            const header = document.getElementById('main-header');
+            const backToTopButton = document.getElementById('back-to-top');
+            window.addEventListener('scroll', () => {
+                header.classList.toggle('scrolled', window.scrollY > 50);
+                backToTopButton.classList.toggle('visible', window.scrollY > 200);
+            });
+            backToTopButton.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+        });
+    </script>
+</body>
+</html>
