@@ -111,8 +111,13 @@
             box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
         }
         header {
-            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            transition: top 0.3s ease-in-out, background-color 0.3s ease, box-shadow 0.3s ease;
+            top: 0;
         }
+        header.hidden-nav {
+            top: -150px; /* Adjust this value based on your header's height */
+        }
+
 
         /* Back to Top Button with new theme */
         #back-to-top {
@@ -394,7 +399,20 @@
             // Back to Top & Scrolled Header Logic
             const header = document.getElementById('main-header');
             const backToTopButton = document.getElementById('back-to-top');
+            let lastScrollTop = 0;
+
             window.addEventListener('scroll', () => {
+                let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+                if (scrollTop > lastScrollTop) {
+                    // Downscroll
+                    header.classList.add('hidden-nav');
+                } else {
+                    // Upscroll
+                    header.classList.remove('hidden-nav');
+                }
+                lastScrollTop = scrollTop <= 0 ? 0 : scrollTop; // For Mobile or negative scrolling
+
                 header.classList.toggle('scrolled', window.scrollY > 50);
                 backToTopButton.classList.toggle('visible', window.scrollY > 200);
             });
